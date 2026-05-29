@@ -79,4 +79,23 @@ public class ContactRepository<T extends Contact> {
         return list;
     }
 
+    public boolean delete(long id) {
+        String sql = "DELETE FROM contacts WHERE id = ?";
+
+        try (Connection conn = DataBaseConnection.connect();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setLong(1, id);
+
+            int rowsAffected = stmt.executeUpdate();
+
+            return rowsAffected > 0;
+
+        } catch (SQLException e) {
+            System.err.println("Erro ao deletar contato no MySQL: " + e.getMessage());
+            e.printStackTrace();
+            throw new RuntimeException("Não foi possível excluir o contato do banco de dados.");
+        }
+    }
+
 }
