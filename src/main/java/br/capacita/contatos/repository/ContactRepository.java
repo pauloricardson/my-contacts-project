@@ -3,11 +3,11 @@ package br.capacita.contatos.repository;
 import br.capacita.contatos.database.DataBaseConnection;
 import br.capacita.contatos.models.CommercialContact;
 import br.capacita.contatos.models.Contact;
+import javafx.beans.Observable;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Types;
+import java.sql.*;
 
 public class ContactRepository<T extends Contact> {
 
@@ -45,6 +45,38 @@ public class ContactRepository<T extends Contact> {
             e.printStackTrace();
             throw new RuntimeException("Não foi possível salvar o contato.");
         }
+    }
+
+    public ObservableList<Contact> searchContacts() {
+        ObservableList<Contact> list = FXCollections.observableArrayList();
+
+        String sql = "SELECT id, name, phone, email, address, organization, date_criation FROM contacts";
+
+        try (Connection conn = DataBaseConnection.connect();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                long id = rs.getLong("id");
+                String name = rs.getString("name");
+                String phone = rs.getString("phone");
+                String email = rs.getString("email");
+                String address = rs.getString("address");
+                String organization = rs.getString("organization");
+                String dateCriation = rs.getString("date_criation");
+
+                if (organization != null && !organization.isBlank()) {
+                    list.add(new CommercialContact(id, name, phone, email, address, organization, dateCriation));
+                } else {
+                    list.add(new Contact(id, name, phone, email, address, dateCriation));
+                }
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Erro ao buscar contatos no banco: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return list;
     }
 
 }
