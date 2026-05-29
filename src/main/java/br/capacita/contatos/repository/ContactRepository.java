@@ -98,4 +98,31 @@ public class ContactRepository<T extends Contact> {
         }
     }
 
+    public void updateContact(T contact) {
+        String sql = "UPDATE contacts SET name = ?, phone = ?, email = ?, address = ?, organization = ? WHERE id = ?";
+
+        try (Connection conn = DataBaseConnection.connect();
+             PreparedStatement stmt = conn.prepareStatement(sql);) {
+
+            stmt.setString(1, contact.getName());
+            stmt.setString(2, contact.getPhone());
+            stmt.setString(3, contact.getEmail());
+            stmt.setString(4, contact.getAddress());
+
+            if (contact instanceof CommercialContact) {
+                stmt.setString(5, ((CommercialContact) contact).getOrganization());
+            } else {
+                stmt.setNull(5, java.sql.Types.VARCHAR);
+            }
+
+            stmt.setLong(6, contact.getId());
+            stmt.executeUpdate();
+            System.out.println("Contato atualizado no MySQL com sucesso!");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Erro ao atualizar o contato no banco.");
+        }
+    }
+
 }
