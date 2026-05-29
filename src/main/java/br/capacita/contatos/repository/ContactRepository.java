@@ -9,9 +9,9 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Types;
 
-public class ContactRepository {
+public class ContactRepository<T extends Contact> {
 
-    public void save(Contact contact) {
+    public void save(T contact) {
         String sql = "INSERT INTO contacts (name, phone, email, address, organization) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conn = DataBaseConnection.connect();
