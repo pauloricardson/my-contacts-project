@@ -50,7 +50,7 @@ public class ContactRepository<T extends Contact> {
     public ObservableList<Contact> searchContacts() {
         ObservableList<Contact> list = FXCollections.observableArrayList();
 
-        String sql = "SELECT id, name, phone, email, address, organization, date_criation FROM contacts";
+        String sql = "SELECT id, name, phone, email, address, organization, created_at FROM contacts";
 
         try (Connection conn = DataBaseConnection.connect();
              PreparedStatement stmt = conn.prepareStatement(sql);
@@ -63,12 +63,12 @@ public class ContactRepository<T extends Contact> {
                 String email = rs.getString("email");
                 String address = rs.getString("address");
                 String organization = rs.getString("organization");
-                String dateCriation = rs.getString("date_criation");
+                String createdAt = rs.getString("created_at");
 
                 if (organization != null && !organization.isBlank()) {
-                    list.add(new CommercialContact(id, name, phone, email, address, organization, dateCriation));
+                    list.add(new CommercialContact(id, name, phone, email, address, organization, createdAt));
                 } else {
-                    list.add(new Contact(id, name, phone, email, address, dateCriation));
+                    list.add(new Contact(id, name, phone, email, address, createdAt));
                 }
             }
 

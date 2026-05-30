@@ -11,8 +11,8 @@ public class CommercialContact extends Contact{
         setOrganization(organization);
     }
 
-    public CommercialContact(long id, String name, String phone, String email, String address, String organization, String dateCriation) {
-        super(id, name, phone, email, address, dateCriation);
+    public CommercialContact(long id, String name, String phone, String email, String address, String organization, String createdAt) {
+        super(id, name, phone, email, address, createdAt);
         setOrganization(organization);
     }
 

@@ -4,8 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class DataBaseConnection {
-    private static final String URL = "jdbc:mysql://localhost:3306/agenda";
-    private static final String USER = "paulo";
+    private static final String URL = "jdbc:mysql://localhost:3306/contacts_service"; //agenda no linux
+    private static final String USER = "root"; //paulo no linux
     private static final String PASSWORD = "6032";
 
     public static Connection connect() {

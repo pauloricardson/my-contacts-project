@@ -14,7 +14,7 @@ public class Contact {
     private final StringProperty phone = new SimpleStringProperty();
     private final StringProperty email = new SimpleStringProperty();
     private final StringProperty address = new SimpleStringProperty();
-    private final StringProperty dateCriation = new SimpleStringProperty();
+    private final StringProperty createdAt = new SimpleStringProperty();
 
     public Contact(String name, String phone, String email, String address) {
         setName(name);
@@ -23,13 +23,13 @@ public class Contact {
         setAddress(address);
     }
 
-    public Contact(long id, String name, String phone, String email, String address, String dateCriation) {
+    public Contact(long id, String name, String phone, String email, String address, String createdAt) {
         this.id.set(id);
         setName(name);
         setPhone(phone);
         setEmail(email);
         setAddress(address);
-        this.dateCriation.set(dateCriation);
+        this.createdAt.set(createdAt);
     }
 
     public StringProperty nameProperty() {return name;}
@@ -41,7 +41,7 @@ public class Contact {
     public String getPhone() {return phone.get();}
     public String getEmail() {return email.get();}
     public String getAddress() {return address.get();}
-    public String getDateCriation() {return dateCriation.get();}
+    public String getCreatedAt() {return createdAt.get();}
 
     public void setName(String nome) {
         if (nome == null || nome.isBlank()) {
