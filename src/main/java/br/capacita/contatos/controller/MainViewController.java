@@ -5,6 +5,7 @@ import br.capacita.contatos.models.Contact;
 import br.capacita.contatos.service.ContactService;
 import br.capacita.contatos.service.ContactServiceSingleton;
 import br.capacita.contatos.util.Alerts;
+import br.capacita.contatos.util.ThemeManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -21,10 +23,15 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.prefs.Preferences;
 
 public class MainViewController implements Initializable {
 
     private final ContactService<Contact> contactService = ContactServiceSingleton.contactService;
+
+    private final Preferences prefs = Preferences.userNodeForPackage(MainViewController.class);
+
+    @FXML private BorderPane root;
 
     @FXML private TableView<Contact> contactsTable;
     @FXML private TableColumn<Contact, String> columnName;
@@ -38,11 +45,33 @@ public class MainViewController implements Initializable {
     @FXML private Label labelOrganization;
     @FXML private Label labelDateCreation;
 
+    @FXML
+    public void setTheme() {
+        Scene scene = root.getScene();
+
+        String darkCss =
+                getClass().getResource("/styles/dark.css").toExternalForm();
+
+        boolean isDark = scene.getStylesheets().contains(darkCss);
+
+        ThemeManager.setDarkMode(!isDark);
+
+        scene.getStylesheets().setAll(
+                getClass().getResource(
+                        ThemeManager.getCurrentTheme()
+                ).toExternalForm()
+        );
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         columnName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         columnPhone.setCellValueFactory(cellData -> cellData.getValue().phoneProperty());
         columnEmail.setCellValueFactory(cellData -> cellData.getValue().emailProperty());
+
+        contactsTable.setColumnResizePolicy(
+                TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS
+        );
 
         contactsTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
@@ -63,6 +92,13 @@ public class MainViewController implements Initializable {
             Stage stage = new Stage();
             stage.setTitle("Adicionar Contato");
             Scene scene = new Scene(parent);
+
+            scene.getStylesheets().add(
+                    getClass().getResource(
+                            ThemeManager.getCurrentTheme()
+                    ).toExternalForm()
+            );
+
             stage.setScene(scene);
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(((Button) event.getSource()).getScene().getWindow());
