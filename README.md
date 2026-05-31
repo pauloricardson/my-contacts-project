@@ -8,15 +8,11 @@ Sistema desktop para gerenciamento de contatos desenvolvido em **JavaFX**, permi
 
 ### 🌙 Modo Escuro
 
-> Adicione aqui a captura da tela principal em modo escuro.
-
-![Tela Principal - Modo Escuro](docs/main-dark.png)
+![Tela Principal - Modo Escuro](docs/dark-mode-window.png)
 
 ### ☀️ Modo Claro
 
-> Adicione aqui a captura da tela principal em modo claro.
-
-![Tela Principal - Modo Claro](docs/dark-mode-window.png)
+![Tela Principal - Modo Claro](light/dark-mode-window.png)
 
 ---
 
