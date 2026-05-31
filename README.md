@@ -16,7 +16,7 @@ Sistema desktop para gerenciamento de contatos desenvolvido em **JavaFX**, permi
 
 > Adicione aqui a captura da tela principal em modo claro.
 
-![Tela Principal - Modo Claro](docs/main-light.png)
+![Tela Principal - Modo Claro](docs/dark-mode-window.png)
 
 ---
 
