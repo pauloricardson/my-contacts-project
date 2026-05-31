@@ -100,7 +100,7 @@ CREATE TABLE contacts (
     email VARCHAR(100),
     address VARCHAR(255),
     organization VARCHAR(100),
-    date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 ```
 
