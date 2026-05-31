@@ -1,4 +1,3 @@
-
 .window {
     -fx-background-color:  #111419;
 }
@@ -15,8 +14,8 @@
 .button-theme {
     -fx-background-color:   #111419;
     -fx-border-color:  #a9c2d9;
-    -fx-background-radius: 4;
-    -fx-border-radius: 4;
+    -fx-background-radius: 100;
+    -fx-border-radius: 100;
 }
 
 .side-panel {
@@ -61,6 +60,7 @@
     -fx-background-radius: 4;
     -fx-border-color: #8ab4d8;
     -fx-border-radius: 4;
+    -fx-text-fill: white;
 }
 
 .add-button:hover {
@@ -72,6 +72,7 @@
     -fx-background-radius: 4;
     -fx-border-color: #9DD0AC;
     -fx-border-radius: 4;
+    -fx-text-fill: white;
 }
 
 .edit-button:hover {
@@ -83,6 +84,7 @@
     -fx-border-color: #B4444F;
     -fx-background-radius: 4;
     -fx-border-radius: 4;
+    -fx-text-fill: white;
 }
 
 .delete-button:hover {
@@ -94,13 +96,12 @@
     -fx-border-color: #4076D8;
     -fx-background-radius: 4;
     -fx-border-radius: 4;
+    -fx-text-fill: white;
 }
 
 .clean-button:hover {
     -fx-background-color: #102a54 !important;
 }
-
-/* Estilização da Tabela */
 
 .table-view {
     -fx-background-color: #161b22;
@@ -146,17 +147,14 @@
     -fx-background-color: #1b222c;
 }
 
-/* Hover */
 .table-row-cell:hover {
     -fx-background-color: #263445;
 }
 
-/* Linha selecionada */
 .table-row-cell:selected {
-    -fx-background-color:  #33516D /*#2d5ea8;*/
+    -fx-background-color:  #33516D;
 }
 
-/* Texto das células */
 .table-cell {
     -fx-text-fill: #e6edf3;
     -fx-alignment: CENTER-LEFT;
@@ -164,13 +162,11 @@
     -fx-padding: 2;
 }
 
-/* Placeholder */
 .table-view .placeholder .label {
     -fx-text-fill: #8b949e;
     -fx-font-size: 14px;
 }
 
-/* ScrollBar */
 .scroll-bar:vertical,
 .scroll-bar:horizontal {
     -fx-background-color: #161b22;
