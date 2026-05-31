@@ -163,13 +163,30 @@ private static final String PASSWORD = "sua_senha";
 
 ### Execute a aplicação
 
-Execute a classe:
+Antes de executar o projeto, certifique-se de que o JavaFX esteja corretamente configurado em seu ambiente de desenvolvimento.
+
+> ⚠️ **Importante:** Este projeto foi desenvolvido utilizando o **JavaFX 26**. Para evitar problemas de compilação e execução, é necessário instalar e configurar corretamente os módulos e bibliotecas do JavaFX compatíveis com essa versão.
+
+Caso utilize uma IDE como IntelliJ IDEA ou Eclipse, verifique se:
+
+- O SDK do JavaFX 26 está instalado;
+- Os módulos JavaFX estão adicionados ao projeto;
+- O `module-path` está configurado corretamente;
+- Os módulos necessários (`javafx.controls`, `javafx.fxml`, entre outros) estão incluídos na execução da aplicação.
+
+Após a configuração do JavaFX, execute a classe principal:
 
 ```java
 AgendaApplication.java
 ```
 
----
+ou
+
+```bash
+mvn javafx:run
+```
+
+caso esteja utilizando Maven.
 
 ## ✅ Projeto Validado
 
