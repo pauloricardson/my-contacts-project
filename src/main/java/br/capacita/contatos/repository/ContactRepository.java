@@ -124,5 +124,4 @@ public class ContactRepository<T extends Contact> {
             throw new RuntimeException("Erro ao atualizar o contato no banco.");
         }
     }
-
 }

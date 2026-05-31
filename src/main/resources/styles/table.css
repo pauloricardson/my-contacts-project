@@ -48,7 +48,7 @@
 
 /* Linha selecionada */
 .table-row-cell:selected {
-    -fx-background-color: #2d5ea8;
+    -fx-background-color:  #33516D /*#2d5ea8;*/
 }
 
 /* Texto das células */
@@ -56,7 +56,7 @@
     -fx-text-fill: #e6edf3;
     -fx-alignment: CENTER-LEFT;
     -fx-border-color: transparent;
-    -fx-padding: 8;
+    -fx-padding: 2;
 }
 
 /* Placeholder */

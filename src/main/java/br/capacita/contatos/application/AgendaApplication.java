@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class AgendaApplication extends Application {
@@ -14,6 +15,8 @@ public class AgendaApplication extends Application {
         Scene scene = new Scene(parent);
         stage.setScene(scene);
         stage.setTitle("Contatos");
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/contacts.png")));
+        stage.setResizable(false);
         stage.show();
     }
 }

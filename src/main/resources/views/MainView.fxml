@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="775.0" prefWidth="950.0" style="-fx-background-color: #111419;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.capacita.contatos.controller.MainViewController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="775.0" prefWidth="1164.0" style="-fx-background-color: #111419;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.capacita.contatos.controller.MainViewController">
    <top>
       <HBox alignment="CENTER" prefHeight="45.0" prefWidth="930.0" style="-fx-background-color: #2A3A49; -fx-background-radius: 4;" styleClass="top-bar" BorderPane.alignment="CENTER">
          <children>
@@ -30,7 +30,7 @@
       </HBox>
    </top>
    <left>
-      <VBox prefHeight="773.0" prefWidth="287.0" style="-fx-background-color: #21262C; -fx-background-radius: 4;" BorderPane.alignment="CENTER">
+      <VBox prefHeight="663.0" prefWidth="354.0" style="-fx-background-color: #21262C; -fx-background-radius: 4;" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" />
          </BorderPane.margin>
@@ -63,7 +63,7 @@
                   <VBox prefHeight="58.0" prefWidth="267.0">
                      <children>
                         <Label text="Nome" textFill="WHITE" />
-                        <Label prefHeight="30.0" prefWidth="268.0" style="-fx-background-color: #111419; -fx-background-radius: 4; -fx-border-color: #32353A; -fx-border-radius: 4;" text="Paulo R S Costa" textFill="#7786a4">
+                        <Label fx:id="labelName" prefHeight="30.0" prefWidth="387.0" style="-fx-background-color: #111419; -fx-background-radius: 4; -fx-border-color: #32353A; -fx-border-radius: 4;" text="lkslkdlsk" textFill="#7786a4">
                            <padding>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </padding>
@@ -76,7 +76,7 @@
                   <VBox prefHeight="58.0" prefWidth="267.0">
                      <children>
                         <Label text="Telefone" textFill="WHITE" />
-                        <Label prefHeight="30.0" prefWidth="268.0" style="-fx-background-color: #111419; -fx-background-radius: 4; -fx-border-color: #32353A; -fx-border-radius: 4;" text="88981708058" textFill="#7786a4">
+                        <Label fx:id="labelPhone" prefHeight="30.0" prefWidth="438.0" style="-fx-background-color: #111419; -fx-background-radius: 4; -fx-border-color: #32353A; -fx-border-radius: 4;" textFill="#7786a4">
                            <padding>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </padding>
@@ -89,7 +89,7 @@
                   <VBox prefHeight="58.0" prefWidth="267.0">
                      <children>
                         <Label text="E-mail" textFill="WHITE" />
-                        <Label prefHeight="30.0" prefWidth="268.0" style="-fx-background-color: #111419; -fx-border-color: #32353A; -fx-border-radius: 4; -fx-background-radius: 4;" text="pauloricardson@gmail.com" textFill="#7786a4">
+                        <Label fx:id="labelEmail" prefHeight="30.0" prefWidth="399.0" style="-fx-background-color: #111419; -fx-border-color: #32353A; -fx-border-radius: 4; -fx-background-radius: 4;" textFill="#7786a4">
                            <padding>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </padding>
@@ -102,7 +102,7 @@
                   <VBox prefHeight="58.0" prefWidth="267.0">
                      <children>
                         <Label text="Endereço" textFill="WHITE" />
-                        <Label prefHeight="30.0" prefWidth="268.0" style="-fx-background-color: #111419; -fx-background-radius: 4; -fx-border-color: #32353A; -fx-border-radius: 4;" text="Quixelô-CE" textFill="#7786a4">
+                        <Label fx:id="labelAddress" prefHeight="30.0" prefWidth="468.0" style="-fx-background-color: #111419; -fx-background-radius: 4; -fx-border-color: #32353A; -fx-border-radius: 4;" textFill="#7786a4">
                            <padding>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </padding>
@@ -115,7 +115,7 @@
                   <VBox prefHeight="58.0" prefWidth="267.0">
                      <children>
                         <Label text="Organização" textFill="WHITE" />
-                        <Label prefHeight="30.0" prefWidth="268.0" style="-fx-background-color: #111419; -fx-background-radius: 4; -fx-border-radius: 4; -fx-border-color: #32353A;" text="IFCE - Campus Iguatu" textFill="#7786a4">
+                        <Label fx:id="labelOrganization" prefHeight="30.0" prefWidth="415.0" style="-fx-background-color: #111419; -fx-background-radius: 4; -fx-border-radius: 4; -fx-border-color: #32353A;" textFill="#7786a4">
                            <padding>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </padding>
@@ -128,7 +128,7 @@
                   <VBox prefHeight="50.0" prefWidth="267.0">
                      <children>
                         <Label text="Data de Criação" textFill="WHITE" />
-                        <Label prefHeight="30.0" prefWidth="268.0" style="-fx-background-color: #111419; -fx-background-radius: 4; -fx-border-radius: 4; -fx-border-color: #32353A;" text="2026-05-18" textFill="#7786a4">
+                        <Label fx:id="labelDateCreation" prefHeight="30.0" prefWidth="403.0" style="-fx-background-color: #111419; -fx-background-radius: 4; -fx-border-radius: 4; -fx-border-color: #32353A;" textFill="#7786a4">
                            <padding>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </padding>
@@ -142,7 +142,7 @@
             </VBox>
             <VBox prefHeight="150.0" prefWidth="267.0" spacing="15.0">
                <children>
-                  <Button fx:id="editContact" mnemonicParsing="false" onAction="#editContact" prefHeight="35.0" prefWidth="273.0" style="-fx-background-color: #295B3E; -fx-border-color: #9DD0AC; -fx-border-radius: 4; -fx-border-width: 1;" styleClass="edit-button" stylesheets="@../styles/general.css" text="Editar" textFill="#9dd0ac">
+                  <Button fx:id="editContact" mnemonicParsing="false" onAction="#editContact" prefHeight="35.0" prefWidth="426.0" style="-fx-background-color: #295B3E; -fx-border-color: #9DD0AC; -fx-border-radius: 4; -fx-border-width: 1;" styleClass="edit-button" stylesheets="@../styles/general.css" text="Editar" textFill="#9dd0ac">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
@@ -157,7 +157,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="277.0" style="-fx-background-color: #712029; -fx-border-color: #B4444F; -fx-border-width: 1; -fx-border-radius: 4;" styleClass="delete-button" stylesheets="@../styles/general.css" text="Apagar" textFill="#d58f96">
+                  <Button fx:id="deleteContact" mnemonicParsing="false" onAction="#deleteContact" prefHeight="35.0" prefWidth="391.0" style="-fx-background-color: #712029; -fx-border-color: #B4444F; -fx-border-width: 1; -fx-border-radius: 4;" styleClass="delete-button" stylesheets="@../styles/general.css" text="Apagar" textFill="#d58f96">
                      <graphic>
                         <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -172,7 +172,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="272.0" style="-fx-background-color: #264A88; -fx-border-color: #4076D8; -fx-border-width: 1; -fx-border-radius: 4;" styleClass="clean-button" stylesheets="@../styles/general.css" text="Limpar" textFill="#94bbff">
+                  <Button fx:id="cleanPanel" mnemonicParsing="false" onAction="#cleanPanel" prefHeight="35.0" prefWidth="436.0" style="-fx-background-color: #264A88; -fx-border-color: #4076D8; -fx-border-width: 1; -fx-border-radius: 4;" styleClass="clean-button" stylesheets="@../styles/general.css" text="Limpar" textFill="#94bbff">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
@@ -242,9 +242,9 @@
             </HBox>
             <TableView fx:id="contactsTable" prefHeight="619.0" prefWidth="613.0" stylesheets="@../styles/table.css">
               <columns>
-                <TableColumn fx:id="columnName" prefWidth="194.0" text="Nome" />
-                <TableColumn fx:id="columnPhone" prefWidth="186.0" text="Telefone" />
-                  <TableColumn fx:id="columnEmail" minWidth="0.0" prefWidth="232.0" text="Email" />
+                <TableColumn fx:id="columnName" prefWidth="276.0" text="Nome" />
+                <TableColumn fx:id="columnPhone" prefWidth="242.0" text="Telefone" />
+                  <TableColumn fx:id="columnEmail" minWidth="0.0" prefWidth="241.0" text="Email" />
               </columns>
                <VBox.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" />

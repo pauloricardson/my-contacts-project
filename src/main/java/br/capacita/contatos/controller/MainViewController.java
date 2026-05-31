@@ -1,23 +1,25 @@
 package br.capacita.contatos.controller;
 
+import br.capacita.contatos.models.CommercialContact;
 import br.capacita.contatos.models.Contact;
 import br.capacita.contatos.service.ContactService;
 import br.capacita.contatos.service.ContactServiceSingleton;
-import javafx.beans.Observable;
-import javafx.collections.ObservableList;
+import br.capacita.contatos.util.Alerts;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MainViewController implements Initializable {
@@ -29,11 +31,27 @@ public class MainViewController implements Initializable {
     @FXML private TableColumn<Contact, String> columnPhone;
     @FXML private TableColumn<Contact, String> columnEmail;
 
+    @FXML private Label labelName;
+    @FXML private Label labelPhone;
+    @FXML private Label labelEmail;
+    @FXML private Label labelAddress;
+    @FXML private Label labelOrganization;
+    @FXML private Label labelDateCreation;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         columnName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         columnPhone.setCellValueFactory(cellData -> cellData.getValue().phoneProperty());
         columnEmail.setCellValueFactory(cellData -> cellData.getValue().emailProperty());
+
+        contactsTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                fillPanel(newValue);
+            } else  {
+                //clearPanel();
+            }
+        });
+
         loadDataTable();
     }
 
@@ -49,8 +67,35 @@ public class MainViewController implements Initializable {
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(((Button) event.getSource()).getScene().getWindow());
             stage.showAndWait();
+            loadDataTable();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public void deleteContact(ActionEvent event) {
+        Contact contactSelected = contactsTable.getSelectionModel().getSelectedItem();
+        if (contactSelected == null) {
+            Alerts.showAlerts("Aviso", null, "Selecione um contato na tabela primeiro!", Alert.AlertType.WARNING);
+            return;
+        }
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmar Exclusão");
+        alert.setHeaderText(null);
+        alert.setContentText("Tem certeza que deseja apagar o contato \"" + contactSelected.getName() + "\"?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            try {
+                contactService.deleteContact(contactSelected.getId());
+
+                Alerts.showAlerts("Sucesso", null, "Contato excluído com sucesso!", Alert.AlertType.INFORMATION);
+                clearPanel();
+                loadDataTable();
+            } catch (Exception e) {
+                Alerts.showAlerts("Erro", null, "Não foi possível excluir o contato.", Alert.AlertType.ERROR);
+            }
         }
     }
 
@@ -58,6 +103,44 @@ public class MainViewController implements Initializable {
         contactsTable.setItems(javafx.collections.FXCollections.observableArrayList(
                 ContactServiceSingleton.contactService.listContacts()
         ));
+    }
+
+    public void cleanPanel(ActionEvent event) {
+        clearPanel();
+    }
+
+    public void clearPanel() {
+        contactsTable.getSelectionModel().clearSelection();
+        labelName.setText("");
+        labelPhone.setText("");
+        labelEmail.setText("");
+        labelAddress.setText("");
+        labelOrganization.setText("");
+        labelDateCreation.setText("");
+    }
+
+    public void fillPanel(Contact contact) {
+        labelName.setText(contact.getName());
+        labelPhone.setText(contact.getPhone());
+        labelEmail.setText(contact.getEmail());
+        labelAddress.setText(contact.getAddress());
+
+        if (contact instanceof CommercialContact) {
+            String organization = ((CommercialContact) contact).getOrganization();
+            labelOrganization.setText(organization);
+        } else {
+            labelOrganization.setText("");
+        }
+
+        labelDateCreation.setText(contact.getCreatedAt().substring(0, 10));
+        LocalDateTime dataHora = LocalDateTime.parse(
+                contact.getCreatedAt(),
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+        );
+
+        labelDateCreation.setText(
+                dataHora.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+        );
     }
 
     @FXML
