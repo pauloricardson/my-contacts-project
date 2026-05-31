@@ -204,6 +204,6 @@ A aplicação foi desenvolvida, testada e validada, apresentando funcionamento a
 
 ## 👨‍💻 Autor
 
-**Paulo Ricardson**
+**Paulo Ricardson S. Costa**
 
 Projeto desenvolvido com foco na aplicação prática de conceitos de Programação Orientada a Objetos, JavaFX, JDBC, MySQL e testes automatizados.
