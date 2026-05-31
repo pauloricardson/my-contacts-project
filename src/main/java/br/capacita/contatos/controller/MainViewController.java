@@ -16,9 +16,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import java.net.URL;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
@@ -29,15 +27,11 @@ public class MainViewController implements Initializable {
 
     private final ContactService<Contact> contactService = ContactServiceSingleton.contactService;
 
-    private final Preferences prefs = Preferences.userNodeForPackage(MainViewController.class);
-
     @FXML private BorderPane root;
-
     @FXML private TableView<Contact> contactsTable;
     @FXML private TableColumn<Contact, String> columnName;
     @FXML private TableColumn<Contact, String> columnPhone;
     @FXML private TableColumn<Contact, String> columnEmail;
-
     @FXML private Label labelName;
     @FXML private Label labelPhone;
     @FXML private Label labelEmail;
@@ -45,8 +39,7 @@ public class MainViewController implements Initializable {
     @FXML private Label labelOrganization;
     @FXML private Label labelDateCreation;
 
-    @FXML
-    public void setTheme() {
+    @FXML public void setTheme() {
         Scene scene = root.getScene();
 
         String darkCss =
@@ -63,29 +56,25 @@ public class MainViewController implements Initializable {
         );
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    @Override public void initialize(URL url, ResourceBundle resourceBundle) {
         columnName.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
         columnPhone.setCellValueFactory(cellData -> cellData.getValue().phoneProperty());
         columnEmail.setCellValueFactory(cellData -> cellData.getValue().emailProperty());
 
-        contactsTable.setColumnResizePolicy(
-                TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS
-        );
+        contactsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
 
         contactsTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 fillPanel(newValue);
             } else  {
-                //clearPanel();
+                clearPanel();
             }
         });
 
         loadDataTable();
     }
 
-    @FXML
-    public void addContact(ActionEvent event) {
+    @FXML public void addContact(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/AddContactView.fxml"));
             Parent parent = loader.load();
@@ -109,7 +98,7 @@ public class MainViewController implements Initializable {
         }
     }
 
-    public void deleteContact(ActionEvent event) {
+    @FXML public void deleteContact(ActionEvent event) {
         Contact contactSelected = contactsTable.getSelectionModel().getSelectedItem();
         if (contactSelected == null) {
             Alerts.showAlerts("Aviso", null, "Selecione um contato na tabela primeiro!", Alert.AlertType.WARNING);
@@ -135,13 +124,13 @@ public class MainViewController implements Initializable {
         }
     }
 
-    public void loadDataTable() {
+    @FXML public void loadDataTable() {
         contactsTable.setItems(javafx.collections.FXCollections.observableArrayList(
                 ContactServiceSingleton.contactService.listContacts()
         ));
     }
 
-    public void cleanPanel(ActionEvent event) {
+    @FXML public void cleanPanel(ActionEvent event) {
         clearPanel();
     }
 
@@ -179,8 +168,7 @@ public class MainViewController implements Initializable {
         );
     }
 
-    @FXML
-    public void editContact(ActionEvent event) {
+    @FXML public void editContact(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/EditContactView.fxml"));
             Parent parent = loader.load();
