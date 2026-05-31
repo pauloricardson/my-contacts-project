@@ -12,7 +12,7 @@ Sistema desktop para gerenciamento de contatos desenvolvido em **JavaFX**, permi
 
 ### ☀️ Modo Claro
 
-![Tela Principal - Modo Claro](light/dark-mode-window.png)
+![Tela Principal - Modo Claro](docs/light-mode-window.png)
 
 ---
 
