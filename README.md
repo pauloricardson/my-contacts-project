@@ -144,7 +144,7 @@ src
 ### Clone o repositório
 
 ```bash
-git clone https://github.com/seu-usuario/agenda-contatos.git
+git clone https://github.com/pauloricardson/my-contacts-project
 ```
 
 ### Configure o banco de dados
