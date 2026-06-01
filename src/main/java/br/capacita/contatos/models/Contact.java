@@ -52,7 +52,7 @@ public class Contact {
 
     public void setPhone(String phone) {
         if (!PhoneValidator.phoneValidator(phone)) {
-            throw new IllegalArgumentException("Telefone inválido");
+            throw new IllegalArgumentException("Telefone inválido!");
         }
         this.phone.set(phone);
     }

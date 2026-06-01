@@ -196,3 +196,54 @@
 .label.footer {
     -fx-text-fill: #7686A9 !important;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+.contact-window {
+    -fx-background-color:  #111419;
+}
+
+.header-contact {
+    -fx-background-color: #33516D;
+    -fx-background-radius: 4;
+}
+
+.organization-checkbox {
+    -fx-text-fill: #ffffff;
+}
+
+.main-contact {
+    -fx-background-color:  #21262C;
+    -fx-background-radius: 4;
+}
+
+.check-box .box {
+    -fx-background-color: transparent;
+    -fx-border-color: #CBD5E1;
+    -fx-border-width: 2;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+.check-box:hover .box {
+    -fx-border-color: #6399FF;
+}
+
+.check-box:selected .box {
+    -fx-background-color: #6399FF;
+    -fx-border-color: #6399FF;
+}
+
+.check-box:selected .mark {
+    -fx-background-color: white;
+}

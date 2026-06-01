@@ -13,12 +13,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -37,6 +39,7 @@ public class MainViewController implements Initializable {
     @FXML private Label labelAddress;
     @FXML private Label labelOrganization;
     @FXML private Label labelDateCreation;
+    @FXML private TextField searchContact;
 
     @FXML public void setTheme() {
         Scene scene = root.getScene();
@@ -70,6 +73,10 @@ public class MainViewController implements Initializable {
             }
         });
 
+        searchContact.textProperty().addListener((observable, oldValue, newValue) -> {
+            filterContactsInRealTime(newValue);
+        });
+
         loadDataTable();
     }
 
@@ -79,14 +86,9 @@ public class MainViewController implements Initializable {
             Parent parent = loader.load();
             Stage stage = new Stage();
             stage.setTitle("Adicionar Contato");
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/add-new.png")));
             Scene scene = new Scene(parent);
-
-            scene.getStylesheets().add(
-                    getClass().getResource(
-                            ThemeManager.getCurrentTheme()
-                    ).toExternalForm()
-            );
-
+            scene.getStylesheets().add(getClass().getResource(ThemeManager.getCurrentTheme()).toExternalForm());
             stage.setScene(scene);
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(((Button) event.getSource()).getScene().getWindow());
@@ -168,17 +170,42 @@ public class MainViewController implements Initializable {
     }
 
     @FXML public void editContact(ActionEvent event) {
+
+        Contact contactSelected = contactsTable.getSelectionModel().getSelectedItem();
+        if (contactSelected == null) {
+            Alerts.showAlerts("Aviso", null, "Selecione um contato para editar!", Alert.AlertType.WARNING);
+            return;
+        }
+
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/EditContactView.fxml"));
             Parent parent = loader.load();
+
+            EditContactViewController controllerEdit = loader.getController();
+            controllerEdit.selectContactForEditing(contactSelected);
+
             Stage stage = new Stage();
             stage.setTitle("Editar Contato");
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/edit-bar.png")));
             Scene scene = new Scene(parent);
+            scene.getStylesheets().add(getClass().getResource(ThemeManager.getCurrentTheme()).toExternalForm());
             stage.setScene(scene);
             stage.initModality(Modality.WINDOW_MODAL);
             stage.showAndWait();
+            loadDataTable();
+            clearPanel();
         } catch (Exception e) {
             e.printStackTrace();
+            Alerts.showAlerts("Erro", null, "Não foi possível abrir a tela de edição.", Alert.AlertType.ERROR);
         }
+    }
+
+    private void filterContactsInRealTime(String filter) {
+        if (filter == null || filter.isBlank()) {
+            loadDataTable();
+            return;
+        }
+        List<Contact> result = contactService.listContacts(filter);
+        contactsTable.setItems(javafx.collections.FXCollections.observableArrayList(result));
     }
 }

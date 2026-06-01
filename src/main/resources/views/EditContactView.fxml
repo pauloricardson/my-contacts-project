@@ -13,29 +13,27 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="400.0" style="-fx-background-color: #111419;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
-   <top>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
-         <children>
-            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/edit_square.png" />
-               </image>
-            </ImageView>
-            <Label text="Editar Contato" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-         </children>
-      </HBox>
-   </top>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="400.0" styleClass="contact-window" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.capacita.contatos.controller.EditContactViewController">
    <padding>
       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
    </padding>
    <center>
-      <VBox prefHeight="616.0" prefWidth="380.0" style="-fx-background-color: #21262C; -fx-background-radius: 5;" BorderPane.alignment="CENTER">
+      <VBox prefWidth="380.0" styleClass="main-contact" BorderPane.alignment="CENTER">
          <children>
+            <HBox alignment="CENTER" prefHeight="67.0" prefWidth="380.0" spacing="10.0" styleClass="header-contact">
+               <children>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/edit_square.png" />
+                     </image>
+                  </ImageView>
+                  <Label styleClass="contact-window-tile" text="Editar Contato">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
             <HBox alignment="CENTER" prefHeight="105.0" prefWidth="446.0">
                <children>
                   <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
@@ -56,8 +54,8 @@
                <children>
                   <VBox prefHeight="57.0" prefWidth="360.0">
                      <children>
-                        <Label text="Nome" textFill="WHITE" />
-                        <TextField prefHeight="30.0" style="-fx-background-color: #111419; -fx-border-color: #32353A; -fx-background-radius: 4; -fx-border-radius: 4;">
+                        <Label text="Nome" />
+                        <TextField fx:id="textName" prefHeight="30.0">
                            <font>
                               <Font name="System Bold Italic" size="12.0" />
                            </font>
@@ -69,8 +67,8 @@
                   </VBox>
                   <VBox prefHeight="57.0" prefWidth="360.0">
                      <children>
-                        <Label text="Telefone" textFill="WHITE" />
-                        <TextField prefHeight="30.0" style="-fx-background-color: #111419; -fx-border-color: #32353A; -fx-background-radius: 4; -fx-border-radius: 4;">
+                        <Label text="Telefone" />
+                        <TextField fx:id="textPhone" prefHeight="30.0">
                            <font>
                               <Font name="System Bold Italic" size="12.0" />
                            </font>
@@ -82,8 +80,8 @@
                   </VBox>
                   <VBox prefHeight="57.0" prefWidth="360.0">
                      <children>
-                        <Label text="E-mail" textFill="WHITE" />
-                        <TextField prefHeight="30.0" style="-fx-background-color: #111419; -fx-border-color: #32353A; -fx-background-radius: 4; -fx-border-radius: 4;">
+                        <Label text="E-mail" />
+                        <TextField fx:id="textEmail" prefHeight="30.0" styleClass="text-field">
                            <font>
                               <Font name="System Bold Italic" size="12.0" />
                            </font>
@@ -95,8 +93,8 @@
                   </VBox>
                   <VBox prefHeight="57.0" prefWidth="360.0">
                      <children>
-                        <Label text="Endereço" textFill="WHITE" />
-                        <TextField prefHeight="30.0" style="-fx-background-color: #111419; -fx-border-color: #32353A; -fx-background-radius: 4; -fx-border-radius: 4;">
+                        <Label text="Endereço" />
+                        <TextField fx:id="textAddress" prefHeight="30.0" styleClass="text-field">
                            <font>
                               <Font name="System Bold Italic" size="12.0" />
                            </font>
@@ -106,11 +104,10 @@
                         </TextField>
                      </children>
                   </VBox>
-                  <CheckBox mnemonicParsing="false" prefHeight="25.0" prefWidth="148.0" text="Contato de organização" textFill="WHITE" />
-                  <VBox prefHeight="57.0" prefWidth="360.0">
+                  <CheckBox fx:id="checkOrganization" mnemonicParsing="false" prefHeight="18.0" prefWidth="295.0" styleClass="organization-checkbox" text="Contato de organização" />
+                  <VBox fx:id="vboxOrganization" prefHeight="57.0" prefWidth="360.0">
                      <children>
-                        <Label text="Organização" textFill="WHITE" />
-                        <TextField prefHeight="30.0" style="-fx-background-color: #111419; -fx-border-color: #32353A; -fx-background-radius: 4; -fx-border-radius: 4;">
+                        <TextField fx:id="textOrganization" prefHeight="30.0" styleClass="text-field">
                            <font>
                               <Font name="System Bold Italic" size="12.0" />
                            </font>
@@ -122,12 +119,12 @@
                   </VBox>
                </children>
             </VBox>
-            <HBox alignment="CENTER" prefHeight="72.0" prefWidth="380.0" spacing="15.0">
+            <HBox alignment="CENTER" prefHeight="68.0" prefWidth="380.0" spacing="15.0">
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
                <children>
-                  <Button fx:id="addContact" mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" style="-fx-background-color: #33516D; -fx-background-radius: 4; -fx-border-color: #8ab4d8; -fx-border-radius: 4;" styleClass="add-button" stylesheets="@../styles/general.css" text="Salvar" textFill="#b2cae8">
+                  <Button fx:id="save" mnemonicParsing="false" onAction="#save" prefHeight="40.0" prefWidth="250.0" styleClass="edit-button" text="Salvar">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -135,7 +132,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button fx:id="cancel" mnemonicParsing="false" prefHeight="40.0" prefWidth="250.0" style="-fx-background-color: #111419; -fx-background-radius: 4; -fx-border-color: #8ab4d8; -fx-border-radius: 4;" styleClass="add-button" stylesheets="@../styles/general.css" text="Cancelar" textFill="#b2cae8">
+                  <Button fx:id="close" mnemonicParsing="false" onAction="#close" prefHeight="40.0" prefWidth="250.0" styleClass="delete-button" text="Cancelar">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>

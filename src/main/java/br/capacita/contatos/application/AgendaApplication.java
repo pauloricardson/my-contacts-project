@@ -21,13 +21,7 @@ public class AgendaApplication extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/MainView.fxml"));
         Parent parent = loader.load();
         Scene scene = new Scene(parent);
-
-        scene.getStylesheets().add(
-                getClass().getResource(
-                        ThemeManager.getCurrentTheme()
-                ).toExternalForm()
-        );
-
+        scene.getStylesheets().add(getClass().getResource(ThemeManager.getCurrentTheme()).toExternalForm());
         stage.setScene(scene);
         stage.setTitle("Contatos");
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/contacts.png")));
