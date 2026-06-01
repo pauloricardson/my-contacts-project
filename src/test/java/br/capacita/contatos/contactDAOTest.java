@@ -2,7 +2,7 @@ package br.capacita.contatos;
 
 import br.capacita.contatos.models.CommercialContact;
 import br.capacita.contatos.models.Contact;
-import br.capacita.contatos.repository.ContactRepository;
+import br.capacita.contatos.DAO.contactDAO;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,15 +13,15 @@ import java.sql.Statement;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ContactRepositoryTest {
+public class contactDAOTest {
 
-    private ContactRepository<Contact> repository;
+    private contactDAO<Contact> repository;
     private Connection conexaoMemoria;
 
     @BeforeEach
     void setUp() throws Exception {
         // 1. Instancia o seu repositório genérico
-        repository = new ContactRepository<>();
+        repository = new contactDAO<>();
 
         // 2. Inicializa o banco SQLite em memória RAM exigido pelo professor
         conexaoMemoria = DriverManager.getConnection("jdbc:sqlite::memory:");

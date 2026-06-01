@@ -1,15 +1,14 @@
-package br.capacita.contatos.repository;
+package br.capacita.contatos.DAO;
 
 import br.capacita.contatos.database.DataBaseConnection;
 import br.capacita.contatos.models.CommercialContact;
 import br.capacita.contatos.models.Contact;
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
 
-public class ContactRepository<T extends Contact> {
+public class contactDAO<T extends Contact> {
 
     public void save(T contact) {
         String sql = "INSERT INTO contacts (name, phone, email, address, organization) VALUES (?, ?, ?, ?, ?)";

@@ -2,20 +2,20 @@ package br.capacita.contatos.service;
 
 import br.capacita.contatos.exeptions.ContactNotFindException;
 import br.capacita.contatos.models.Contact;
-import br.capacita.contatos.repository.ContactRepository;
+import br.capacita.contatos.DAO.contactDAO;
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ContactService<T extends Contact> {
-    private final ContactRepository<T> contactRepository = new ContactRepository<>();
+    private final contactDAO<T> contactDAO = new contactDAO<>();
 
     public void addContact(T contact) {
-        contactRepository.save(contact);
+        contactDAO.save(contact);
     }
 
     public List<Contact> listContacts() {
-        return contactRepository.searchContacts();
+        return contactDAO.searchContacts();
     }
 
     public List<Contact> listContacts(String filter) {
@@ -36,7 +36,7 @@ public class ContactService<T extends Contact> {
     }
 
     public boolean deleteContact(long id) throws ContactNotFindException {
-        boolean deleted = contactRepository.delete(id);
+        boolean deleted = contactDAO.delete(id);
 
         if (!deleted) {
             throw new ContactNotFindException("Nenhum contato encontrado");
@@ -45,7 +45,7 @@ public class ContactService<T extends Contact> {
     }
 
     public void updateContact(T contact) {
-        contactRepository.updateContact(contact);
+        contactDAO.updateContact(contact);
     }
 
     public String normalize(String text) {
