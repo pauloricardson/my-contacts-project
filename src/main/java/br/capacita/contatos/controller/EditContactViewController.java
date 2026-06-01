@@ -14,13 +14,13 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class EditContactViewController implements Initializable {
 
     private final ContactService<Contact> contactService = ContactServiceSingleton.contactService;
+
     private long idContactActual;
     @FXML private TextField textName;
     @FXML private TextField textPhone;

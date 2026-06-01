@@ -53,8 +53,6 @@
     -fx-text-fill: white;
 }
 
-/* Estilização de Botões */
-
 .add-button {
     -fx-background-color:  #33516D;
     -fx-background-radius: 4;
@@ -196,18 +194,6 @@
 .label.footer {
     -fx-text-fill: #7686A9 !important;
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 .contact-window {
     -fx-background-color:  #111419;

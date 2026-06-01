@@ -3,7 +3,6 @@ package br.capacita.contatos.service;
 import br.capacita.contatos.exeptions.ContactNotFindException;
 import br.capacita.contatos.models.Contact;
 import br.capacita.contatos.repository.ContactRepository;
-
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;

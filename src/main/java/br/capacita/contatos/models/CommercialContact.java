@@ -18,8 +18,6 @@ public class CommercialContact extends Contact{
 
     public String getOrganization() {return organization.get();}
 
-    public StringProperty organizationProperty() {return organization;}
-
     public void setOrganization(String organization) {
         if (organization == null || organization.isBlank()) {
             throw new IllegalArgumentException("Nome da organização inválida");

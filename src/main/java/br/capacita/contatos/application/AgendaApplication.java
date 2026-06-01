@@ -17,7 +17,6 @@ public class AgendaApplication extends Application {
 
         Preferences prefs = Preferences.userNodeForPackage(MainViewController.class);
         boolean darkMode = prefs.getBoolean("darkMode", true);
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/MainView.fxml"));
         Parent parent = loader.load();
         Scene scene = new Scene(parent);
@@ -27,5 +26,6 @@ public class AgendaApplication extends Application {
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/contacts.png")));
         stage.setResizable(false);
         stage.show();
+
     }
 }
