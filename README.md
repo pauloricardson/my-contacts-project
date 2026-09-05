@@ -1,204 +1,166 @@
-# 📒 Agenda de Contatos
+# 📒 MyContacts API — Agenda de Contatos RESTful
 
-Sistema desktop para gerenciamento de contatos desenvolvido em **JavaFX**, permitindo o cadastro, edição, exclusão, pesquisa e visualização de contatos de forma simples e intuitiva. A aplicação possui suporte a **modo claro e modo escuro**, persistência de dados em **MySQL** e testes automatizados com **JUnit**.
-
----
-
-## 📸 Interface da Aplicação
-
-### 🌙 Modo Escuro
-
-![Tela Principal - Modo Escuro](docs/dark-mode-window.png)
-
-### ☀️ Modo Claro
-
-![Tela Principal - Modo Claro](docs/light-mode-window.png)
+Transformação da aplicação desktop MyContacts (JavaFX + JDBC) em uma **API RESTful de back-end completa, segura e multiusuário**, construída com **Spring Boot**. Cada usuário se cadastra, faz login com **JWT** e gerencia apenas a **sua própria** agenda de contatos privada.
 
 ---
 
-## 🚀 Funcionalidades
+## 🚀 Tecnologias Utilizadas
 
-- ✔️ Adicionar contatos
-- ✔️ Editar contatos
-- ✔️ Excluir contatos
-- ✔️ Visualizar informações dos contatos
-- ✔️ Pesquisar contatos por nome
-- ✔️ Validação de e-mail
-- ✔️ Validação de telefone
-- ✔️ Alternância entre tema claro e escuro
-- ✔️ Armazenamento em banco de dados MySQL
-- ✔️ Tratamento de exceções personalizadas
-- ✔️ Testes automatizados
-
----
-
-## 🛠️ Tecnologias Utilizadas
-
-- Java
-- JavaFX
-- FXML
-- CSS
-- MySQL
-- JDBC
-- JUnit
-- Maven
+| Camada | Tecnologia |
+|---|---|
+| Framework | Spring Boot 3.5 (Java 21) |
+| API REST | Spring Web (`@RestController`, `ResponseEntity`) |
+| Persistência | Spring Data JPA / Hibernate (substitui o JDBC) |
+| Segurança | Spring Security + JWT (jjwt) |
+| Validação | Bean Validation (`@NotBlank`, `@Email`, `@Pattern`) |
+| Mapeamento DTO ↔ Entidade | ModelMapper |
+| Documentação | springdoc-openapi (Swagger UI) |
+| Bancos | H2 (padrão, em memória) e MySQL (profile `mysql`) |
+| Testes | JUnit 5, Mockito, MockMvc (27 testes automatizados) |
 
 ---
 
-## 📚 Conceitos Aplicados
-
-Durante o desenvolvimento foram utilizados diversos conceitos fundamentais da linguagem Java e da Engenharia de Software:
-
-### Programação Orientada a Objetos (POO)
-
-- Encapsulamento
-- Herança
-- Polimorfismo
-- Abstração
-
-### Generics
-
-Utilização de tipos genéricos para tornar o código mais reutilizável, seguro e flexível.
-
-### Expressões Lambda
-
-Uso de expressões lambda para simplificar implementações funcionais e melhorar a legibilidade do código.
-
-### Tratamento de Exceções
-
-Criação de exceções personalizadas para tratamento adequado de erros e validações.
-
-### Arquitetura em Camadas
-
-A aplicação foi organizada seguindo uma estrutura em camadas:
+## 🏗️ Arquitetura
 
 ```text
-Controller
-   ↓
-Service
-   ↓
-Repository
-   ↓
-Database (MySQL)
+Controller (@RestController)
+      ↓  DTOs (ContatoRequestDTO / ContatoResponseDTO)
+Service (@Service)  ←  ModelMapper
+      ↓
+Repository (Spring Data JPA — derived queries + @Query JPQL)
+      ↓
+Entidades (@Entity): Usuario (1) ──< Contato (N)  [ManyToOne]
 ```
+
+### Endpoints
+
+**Autenticação (`/api/auth` — públicos):**
+
+| Método | Rota | Descrição |
+|---|---|---|
+| POST | `/api/auth/register` | Cadastra um novo usuário (201) |
+| POST | `/api/auth/login` | Autentica e retorna o token JWT (200) |
+
+**Contatos (`/api/v1/contatos` — exigem `Authorization: Bearer <token>`):**
+
+| Método | Rota | Descrição |
+|---|---|---|
+| GET | `/api/v1/contatos` | Lista os contatos do usuário logado (filtro `?nome=`) |
+| GET | `/api/v1/contatos/busca?termo=` | Busca JPQL por nome, e-mail, organização ou telefone |
+| GET | `/api/v1/contatos/{id}` | Detalha um contato |
+| POST | `/api/v1/contatos` | Cria um contato (201) |
+| PUT | `/api/v1/contatos/{id}` | Atualiza (só o dono — `@PreAuthorize`) |
+| DELETE | `/api/v1/contatos/{id}` | Exclui (só o dono — `@PreAuthorize`, 204) |
+
+### Status codes
+
+- `201` criado · `204` excluído · `200` sucesso
+- `400` validação reprovada · `401` não autenticado (token ausente/inválido)
+- `403` não é o dono do contato · `404` contato não encontrado
+- `409` conflito — e-mail duplicado (contato ou usuário)
 
 ---
 
-## 🗄️ Banco de Dados
+## 🔐 Segurança
 
-A aplicação utiliza o MySQL para persistência dos dados dos contatos.
+- **Spring Security** stateless com filtro JWT por requisição (`JwtAuthenticationFilter`).
+- Senhas com hash **BCrypt**.
+- `SecurityFilterChain`: apenas `/api/auth/**` e Swagger são públicos; `.anyRequest().authenticated()`.
+- **Autorização em nível de método**: `@PreAuthorize("@contatoService.pertenceAoUsuario(#id, authentication.name)")` garante que só o dono edite/exclua o contato (PUT/DELETE → 403).
+- Regra de unicidade no banco: e-mail de contato é único **por usuário** (`unique (usuario_id, email)`).
 
-A comunicação com o banco de dados é realizada através do **JDBC (Java Database Connectivity)**, permitindo operações completas de CRUD (Create, Read, Update e Delete).
+---
 
-Exemplo da tabela utilizada:
+## 📚 Documentação (Swagger/OpenAPI)
 
-```sql
-CREATE TABLE contacts (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    phone VARCHAR(20) NOT NULL,
-    email VARCHAR(100),
-    address VARCHAR(255),
-    organization VARCHAR(100),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+Com a aplicação rodando, acesse:
+
+- **Swagger UI**: http://localhost:8080/swagger-ui.html
+- **OpenAPI JSON**: http://localhost:8080/v3/api-docs
+
+Endpoints agrupados com `@Tag` ("Contatos", "Autenticação"), DTOs documentados com `@Schema`, operações com `@Operation`/`@ApiResponse` (incluindo erros 401 e 403) e esquema de autorização `bearerAuth` (botão **Authorize** no Swagger).
+
+---
+
+## ▶️ Como Executar
+
+```bash
+# 1. Clonar
+git clone https://github.com/pauloricardson/my-contacts-project
+
+# 2. Rodar (H2 em memória, pronto para uso)
+mvn spring-boot:run
+```
+
+A API sobe em `http://localhost:8080`.
+
+### Usar MySQL em vez do H2
+
+```bash
+mvn spring-boot:run -Dspring-boot.run.profiles=mysql
+```
+
+Configuração via variáveis de ambiente (com defaults locais): `MYSQL_HOST`, `MYSQL_PORT`, `MYSQL_DATABASE`, `MYSQL_USER`, `MYSQL_PASSWORD`, `JWT_SECRET`, `JWT_EXPIRATION_MS`. O Hibernate cria/atualiza o schema (`ddl-auto: update`).
+
+### Exemplo de uso
+
+```bash
+# Registrar
+curl -X POST http://localhost:8080/api/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{"nome":"Paulo Ricardson","email":"paulo@email.com","senha":"senha123"}'
+
+# Login (retorna o token)
+curl -X POST http://localhost:8080/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"paulo@email.com","senha":"senha123"}'
+
+# Criar contato
+curl -X POST http://localhost:8080/api/v1/contatos \
+  -H "Authorization: Bearer SEU_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"nome":"Maria Silva","telefone":"(85) 98170-8058","email":"maria@email.com"}'
 ```
 
 ---
 
 ## 🧪 Testes
 
-Foram realizados testes automatizados utilizando **JUnit**, garantindo maior confiabilidade e qualidade do sistema.
+```bash
+mvn test
+```
 
-Os testes contemplam:
+27 testes automatizados, todos passando:
 
-- Validação de e-mail
-- Validação de telefone
-- Regras de negócio da camada Service
-- Operações relacionadas aos contatos
+- **Integração (MockMvc + H2)**: fluxo completo registro → login → CRUD, isolamento entre usuários (404/403), e-mail duplicado (409), validação de DTOs (400), token ausente/inválido (401), busca JPQL, documentação pública.
+- **Unitários**: emissão/validação de tokens JWT (expiração, adulteração, chave errada) e regras da `ContatoService` com Mockito.
 
 ---
 
 ## 📂 Estrutura do Projeto
 
 ```text
-src
-├── application
-├── controller
-├── database
-├── exceptions
-├── models
-├── repository
-├── service
-├── util
-└── resources
-    ├── images
-    ├── styles
-    └── views
+src/main/java/br/capacita/contatos
+├── controller/      AuthController, ContatoController (@RestController)
+├── service/         ContatoService, AuthService, UsuarioService (@Service)
+├── repository/      ContatoRepository, UsuarioRepository (Spring Data JPA)
+├── entity/          Contato, Usuario (@Entity, ManyToOne/OneToMany)
+├── dto/             ContatoRequestDTO, ContatoResponseDTO, TokenResponseDTO...
+├── exception/       GlobalExceptionHandler (@ControllerAdvice), ContatoNaoEncontrado...
+├── security/        JwtService, JwtAuthenticationFilter, SecurityConfig...
+└── config/          OpenApiConfig, ModelMapperConfig
 ```
 
 ---
 
-## ▶️ Como Executar
+## ✅ Critérios do Projeto 3 (Módulo Avançado)
 
-### Clone o repositório
-
-```bash
-git clone https://github.com/pauloricardson/my-contacts-project
-```
-
-### Configure o banco de dados
-
-Crie um banco MySQL e execute o script de criação da tabela.
-
-### Configure a conexão
-
-Na classe `DataBaseConnection`, informe as credenciais do seu banco:
-
-```java
-private static final String URL = "jdbc:mysql://localhost:3306/contacts_service";
-private static final String USER = "seu_usuario";
-private static final String PASSWORD = "sua_senha";
-```
-
-### Execute a aplicação
-
-Antes de executar o projeto, certifique-se de que o JavaFX esteja corretamente configurado em seu ambiente de desenvolvimento.
-
-> ⚠️ **Importante:** Este projeto foi desenvolvido utilizando o **JavaFX 26**. Para evitar problemas de compilação e execução, é necessário instalar e configurar corretamente os módulos e bibliotecas do JavaFX compatíveis com essa versão.
-
-Caso utilize uma IDE como IntelliJ IDEA ou Eclipse, verifique se:
-
-- O SDK do JavaFX 26 está instalado;
-- Os módulos JavaFX estão adicionados ao projeto;
-- O `module-path` está configurado corretamente;
-- Os módulos necessários (`javafx.controls`, `javafx.fxml`, entre outros) estão incluídos na execução da aplicação.
-
-Após a configuração do JavaFX, execute a classe principal:
-
-```java
-AgendaApplication.java
-```
-
-ou
-
-```bash
-mvn javafx:run
-```
-
-caso esteja utilizando Maven.
-
-## ✅ Projeto Validado
-
-A aplicação foi desenvolvida, testada e validada, apresentando funcionamento adequado para todas as funcionalidades propostas:
-
-- Cadastro de contatos
-- Edição de contatos
-- Exclusão de contatos
-- Pesquisa de contatos
-- Visualização detalhada
-- Persistência em banco de dados MySQL
-- Alternância entre modo claro e escuro
+- ✔️ JDBC substituído por **Spring Data JPA (Hibernate)** — `@Entity`, `@ManyToOne`/`@OneToMany`, consultas derivadas + `@Query` JPQL
+- ✔️ Lógica migrada para **API RESTful Spring Boot** (`@RestController`, rotas no plural `/api/v1/contatos`, `ResponseEntity` com 201/204/404)
+- ✔️ **DTOs + Camada de Serviço** (`@Service`) com **ModelMapper**
+- ✔️ **Spring Security + JWT** — `SecurityFilterChain`, `@PreAuthorize` (apenas o dono edita/exclui), 401/403 padronizados
+- ✔️ **GlobalExceptionHandler** (`@ControllerAdvice`) — 404 e 409
+- ✔️ **Swagger/OpenAPI** — `springdoc-openapi`, `@Tag`, `@Operation`, `@ApiResponse`, `@Schema`
 
 ---
 
@@ -206,4 +168,4 @@ A aplicação foi desenvolvida, testada e validada, apresentando funcionamento a
 
 **Paulo Ricardson S. Costa**
 
-Projeto desenvolvido com foco na aplicação prática de conceitos de Programação Orientada a Objetos, JavaFX, JDBC, MySQL e testes automatizados.
+Entrega 3 do módulo avançado — consolidação do conhecimento: JPA, REST, DTOs, segurança e documentação.

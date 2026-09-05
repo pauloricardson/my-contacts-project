@@ -1,0 +1,51 @@
+spring:
+  application:
+    name: mycontacts-api
+
+  # Banco padrão: H2 em memória (dev/testes). Para MySQL, ative o profile "mysql".
+  datasource:
+    url: jdbc:h2:mem:mycontacts;DB_CLOSE_DELAY=-1
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+app:
+  jwt:
+    # Em produção, defina via variável de ambiente (mínimo de 32 caracteres).
+    secret: ${JWT_SECRET:mycontacts-chave-secreta-muito-longa-para-assinar-tokens-jwt-hs256}
+    expiration-ms: ${JWT_EXPIRATION_MS:86400000} # 24 horas
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+
+---
+spring:
+  config:
+    activate:
+      on-profile: mysql
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_DATABASE:mycontacts}?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${MYSQL_USER:root}
+    password: ${MYSQL_PASSWORD:}
+  jpa:
+    hibernate:
+      ddl-auto: update
+  h2:
+    console:
+      enabled: false
